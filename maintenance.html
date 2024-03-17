@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appliance Maintenance</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+    }
+    .appliance-card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      transition: transform 0.3s, box-shadow 0.3s; /* Add transition for hover effect */
+    }
+    .appliance-card:hover {
+      transform: scale(1.02); /* Slightly increase size on hover */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle box-shadow on hover */
+    }
+    .appliance-icon {
+      width: 80px;
+      height: 80px;
+      background-color: #eee;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 20px;
+    }
+    .appliance-icon img {
+      max-width: 50px;
+      max-height: 50px;
+    }
+    .appliance-info {
+      flex: 1;
+    }
+    .appliance-name {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .appliance-detail {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    .appliance-detail span {
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    .warranty-active {
+      color: green;
+    }
+    .warranty-expired {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Appliance Maintenance</h1>
+
+    <div class="appliance-card">
+      <div class="appliance-icon">
+        <img src="fan.png" alt="Fan">
+      </div>
+      <div class="appliance-info">
+        <div class="appliance-name">Ceiling Fan</div>
+        <div class="appliance-detail">
+          <span>Purchase Date:</span>
+          <span>01/01/2021</span>
+        </div>
+        <div class="appliance-detail">
+          <span>Last Maintenance:</span>
+          <span>15/03/2023</span>
+        </div>
+        <div class="appliance-detail">
+          <span>Warranty:</span>
+          <span class="warranty-active">Active (expires 31/12/2023)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="appliance-card">
+      <div class="appliance-icon">
+        <img src="ac.png" alt="Air Conditioner">
+      </div>
+      <div class="appliance-info">
+        <div class="appliance-name">Air Conditioner</div>
+        <div class="appliance-detail">
+          <span>Purchase Date:</span>
+          <span>15/06/2020</span>
+        </div>
+        <div class="appliance-detail">
+          <span>Last Maintenance:</span>
+          <span>20/05/2023</span>
+        </div>
+        <div class="appliance-detail">
+          <span>Warranty:</span>
+          <span class="warranty-expired">Expired (expired 14/06/2023)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="appliance-card">
+      <div class="appliance-icon">
+        <img src="Bulb.png" alt="Lamp">
+      </div>
+      <div class="appliance-info">
+        <div class="appliance-name">Bulb</div>
+        <div class="appliance-detail">
+          <span>Purchase Date:</span>
+          <span>10/12/2022</span>
+        </div>
+        <div class="appliance-detail">
+          <span>Last Maintenance:</span>
+          <span>N/A</span>
+        </div>
+        <div class="appliance-detail">
+          <span>Warranty:</span>
+          <span class="warranty-active">Active (expires 09/12/2024)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="appliance-card">
+      <div class="appliance-icon">
+        <img src="LED.png" alt="Color Lamp">
+      </div>
+      <div class="appliance-info">
+        <div class="appliance-name">Color Lamp</div>
+        <div class="appliance-detail">
+          <span>Purchase Date:</span>
+          <span>25/02/2023</span>
+        </div>
+        <div class="appliance-detail">
+          <span>Last Maintenance:</span>
+          <span>N/A</span>
+        </div>
+        <div class="appliance-detail">
+          <span>Warranty:</span>
+          <span class="warranty-active">Active (expires 24/02/2025)</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
