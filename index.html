@@ -1,171 +1,582 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Home Dashboard</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .card {
-            background: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin: 10px;
-            padding: 20px;
-            width: 250px;
-            box-sizing: border-box;
-        }
-        .card h2 {
-            color: #333;
-            font-size: 20px;
-            margin-top: 0;
-        }
-        .card p {
-            color: #666;
-            margin: 10px 0;
-        }
-        .card input,
-        .card select {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        .icon {
-            height: 40px;
-            margin-bottom: 10px;
-        }
-        .bulb {
-            fill: #ffd700;
-            transition: fill 0.3s ease;
-        }
-        .bulb-off {
-            fill: #9e9e9e;
-        }
-        .glow {
-            filter: url(#glow-effect);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Home Dashboard</title>
+  <style>
+ .card svg {
+  transition: transform 0.3s ease-in-out; /* Smooth transition for rotation */
+  display: inline-block; /* Ensure SVG is block-level for transform */
+}
+
+/* Rotate icons on hover around the Y-axis */
+.card:hover svg {
+  transform: rotateY(360deg); /* Complete a full 360-degree rotation around the Y-axis */
+}
+    body {
+      background: linear-gradient(145deg, #e4e2e4, #fbf6f6) no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cooling-animation {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      overflow: hidden;
+      /* Keep everything inside the card */
+      pointer-events: none;
+      display: none;
+      /* Hide by default */
+    }
+
+    .flake {
+      position: absolute;
+      border-radius: 50%;
+      background-color: #FFF;
+      box-shadow: 0 0 6px rgba(255, 255, 255, 0.9);
+      opacity: 0.8;
+      animation: fall 5s linear infinite;
+    }
+
+    /* Define the sizes and positions of the snowballs here */
+    .flake:nth-child(1) {
+      left: 20%;
+      width: 10px;
+      height: 10px;
+      animation-delay: 0s;
+    }
+
+    .flake:nth-child(2) {
+      left: 50%;
+      width: 15px;
+      height: 15px;
+      animation-delay: 1s;
+    }
+
+    .flake:nth-child(3) {
+      left: 80%;
+      width: 8px;
+      height: 8px;
+      animation-delay: 2s;
+    }
+
+    /* Additional flakes can be added with varying sizes and delays for a more natural effect */
+
+    @keyframes fall {
+      0% {
+        top: -25px;
+        opacity: 1;
+        transform: translateX(0) rotate(0deg);
+      }
+
+      50% {
+        opacity: 0.8;
+      }
+
+      100% {
+        top: 100%;
+        opacity: 0;
+        transform: translateX(10px) rotate(180deg);
+      }
+    }
+    .card {
+      background: #E4C2C1;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      margin: 10px;
+      padding: 20px;
+      width: 250px;
+      box-sizing: border-box;
+    }
+
+    .card h2 {
+      color: #333;
+      font-size: 20px;
+      margin-top: 0;
+    }
+
+    .card p {
+      color: #666;
+      margin: 10px 0;
+    }
+
+    .card input,
+    .card select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    .icon {
+      height: 40px;
+      margin-bottom: 10px;
+    }
+
+    .card {
+      background: #060001ee;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 250px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    .card h2 {
+      color: #333;
+      font-size: 20px;
+      margin-top: 0;
+    }
+
+    .card p {
+      color: #666;
+    }
+
+    .card select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    .bulb {
+      fill: #ffd700;
+      transition: fill 0.3s ease;
+    }
+
+    .bulb-off {
+      fill: #9e9e9e;
+    }
+
+    .glow {
+      filter: url(#glow-effect);
+    }
+
+    .fan-icon {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 10px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.5));
+    }
+
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 15px;
+      background: #ddd;
+      outline: none;
+      opacity: 0.7;
+      transition: opacity .2s;
+    }
+
+    .slider:hover {
+      opacity: 1;
+    }
+    
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 25px;
+      height: 25px;
+      background: #4CAF50;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+
+    .slider::-moz-range-thumb {
+      width: 25px;
+      height: 25px;
+      background: #4CAF50;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+    .icon-circle {
+  background-color: #003067; /* Adjust the color as needed */
+  
+  border-radius: 50%;
+  width: 80px; /* Adjust the size as needed */
+  height: 80px; /* Adjust the size as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 20px; /* Centers the circle and adds space below */
+}
+.icon-svg {
+  fill: #333; /* Icon color */
+  transition: transform 0.3s ease-in-out; /* Smooth transition for rotation */
+}
+.card:hover .icon-svg {
+  transform: rotateY(360deg); /* Rotates the icon on hover */
+}
+.card {
+  /* existing styles */
+  transition: background 0.4s ease-in-out; /* Smooth transition for background */
+}
+.card:hover .icon-circle{
+  background: radial-gradient(circle at bottom right, #f5a2fd, #ff4190b3 70%);
+}
+.card:hover {
+  background: radial-gradient(circle at bottom right, #f5a2fd, #ff4190b3 70%);
+}
+.card .icon, .card svg {
+  transition: transform 0.3s ease-in-out; /* Smooth transition for rotation */
+}
+
+/* Rotate SVG and image icons on hover */
+.card:hover .icon, .card:hover svg {
+  transform: rotateY(360deg); /* Complete a full 360-degree rotation around the Y-axis */
+}
+
+/* Styles for the icon's circular container */
+.icon-circle {
+  background-color: #003067; /* Adjust the color as needed */
+  border-radius: 50%;
+  width: 80px; /* Adjust the size as needed */
+  height: 80px; /* Adjust the size as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 20px; /* Centers the circle and adds space below */
+}
+
+.card:hover .icon-circle{
+  background: radial-gradient(circle at bottom right, #f5a2fd, #ff4190b3 70%);
+}
+
+/* Styles to change the card background on hover */
+.card {
+  transition: background 0.4s ease-in-out; /* Smooth transition for background */
+}
+
+.card:hover {
+  background: radial-gradient(circle at bottom right, #f5a2fd, #ff4190b3 70%);
+}
+  </style>
 </head>
+
 <body>
-    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-        <filter id="glow-effect" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
-            <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-        </filter>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <filter id="glow-effect" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.5" result="coloredBlur" />
+      <feMerge>
+        <feMergeNode in="coloredBlur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </svg>
+  <div class="card">
+    <div class="icon-circle">
+
+    <svg class="fan-icon" id="fanSvg" viewBox="0 0 200 200" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+      <!-- Center circle -->
+      <circle cx="100" cy="100" r="20" fill="#000000" />
+      <!-- Fan blades -->
+      <path d="M 100,100 L 160,100 L 154,130 L 100,100 Z" fill="#000000" />
+      <path d="M 100,100 L 40,100 L 46,70 L 100,100 Z" fill="#000000" />
+      <path d="M 100,100 L 100,40 L 130,46 L 100,100 Z" fill="#000000" />
+      <path d="M 100,100 L 100,160 L 70,154 L 100,100 Z" fill="#000000" />
+      <!-- Center cap -->
+      <circle cx="100" cy="100" r="10" fill="#ffffff" />
     </svg>
-    <div class="card">
-        <img src="Fan.png" alt="Fan" class="icon">
-        <h2>Fan</h2>
-        <p>Control the speed of the fan</p>
-        <input type="range" min="0" max="5" value="0">
+  </div>
+    <h2>Fan</h2>
+    <p>Control the speed of the fan</p>
+    <input type="range" min="0" max="5" value="0" class="slider" id="fanSpeed" oninput="adjustFanSpeed()">
+  </div>
+
+  <div class="card color-spread-hover">
+    <div class="icon-circle">
+      <svg id="bulbIcon" viewBox="0 0 24 24" width="50" height="50">
+      <path class="bulb bulb-off"
+        d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h8c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7zm-4 7c0-2.21 1.79-4 4-4s4 1.79 4 4h-8z" />
+    </svg>
+  </div>
+    <h2>Bulb</h2>
+    <p>Turn on or off the bulb</p>
+    <select id="bulbState" onchange="toggleBulb()">
+      <option value="off">Off</option>
+      <option value="on">On</option>
+    </select>
+
+  </div>
+
+  <div class="card">
+    <div class="icon-circle">
+
+    <img src="LED.png" alt="Led" class="icon">
     </div>
-    <div class="card">
-        <svg id="bulbIcon" viewBox="0 0 24 24" width="50" height="50">
-            <path class="bulb bulb-off"
-                d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h8c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7zm-4 7c0-2.21 1.79-4 4-4s4 1.79 4 4h-8z" />
-        </svg>
-        <h2>Bulb</h2>
-        <p>Turn on or off the bulb</p>
-        <select id="bulbState" onchange="toggleBulb()">
-            <option value="off">Off</option>
-            <option value="on">On</option>
-        </select>
+    <h2>Led</h2>
+    <p>Control the color of the led</p>
+    <input type="color" value="#ff0000">
+  </div>
+
+  <div class="card">
+    <div class="icon-circle">
+    <img src="AC.png" alt="Air conditioner" class="icon">
     </div>
-    <div class="card">
-        <img src="LED.png" alt="Led" class="icon">
-        <h2>Led</h2>
-        <p>Control the color of the led</p>
-        <input type="color" value="#ff0000">
+    <h2>Air conditioner</h2>
+    <p>Control state & temp of AC</p>
+    <select id="acState">
+      <option value="off">Off</option>
+      <option value="on">On</option>
+    </select>
+    <input type="number" value="23">
+    <!-- Add this inside your .card -->
+    <div class="cooling-animation">
+      <div class="flake"></div>
+      <div class="flake"></div>
+      <div class="flake"></div>
+      <div class="flake"></div>
+      <div class="flake"></div>
+      <div class="flake"></div>
+      <div class="flake"></div>
+      <div class="flake"></div>
+      <div class="flake"></div>
     </div>
-    <div class="card">
-        <img src="AC.png" alt="Air conditioner" class="icon">
-        <h2>Air conditioner</h2>
-        <p>Control state & temp of AC</p>
-        <select>
-            <option value="off">Off</option>
-            <option value="on">On</option>
-        </select>
-        <input type="number" value="23">
-    </div>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        fetch('https://kodessphere-api.vercel.app/devices/f3HYHGl')
-          .then(response => response.json())
-          .then(data => {
-            document.querySelector('input[type="range"]').value = data.fan;
-            document.getElementById('bulbState').value = data.bulb ? 'on' : 'off';
-            document.querySelector('input[type="color"]').value = data.led;
-            document.querySelectorAll('.card')[3].querySelector('select').value = data.ac.state ? 'on' : 'off';
-            document.querySelectorAll('.card')[3].querySelector('input[type="number"]').value = data.ac.temp;
-            toggleBulb();
-          })
-          .catch(error => {
-            console.error('Error fetching initial data:', error);
-          });
+  </div>
+</body>
+<script>
+
+  function adjustSnowflakes(temp) {
+  // Define the minimum and maximum temperatures for snowflake visibility
+  const minTemp = 16;
+  const maxTemp = 30;
+
+  // Calculate the number of snowflakes based on the current temperature
+  let numberOfFlakes = Math.max(50 - (temp - minTemp) * 5, 0); // Example calculation
+  
+  const snowContainer = document.querySelector('.cooling-animation');
+  snowContainer.innerHTML = ''; // Clear existing snowflakes
+
+  if (temp <= maxTemp && temp >= minTemp) {
+    generateSnowflakes(numberOfFlakes); // Generate snowflakes based on the new temperature
+  } else {
+    // Hide snow effect if the temperature is out of the snow effect range
+    snowContainer.style.display = 'none';
+  }
+}
+
+  function generateSnowflakes() {
+    const numberOfFlakes = 50; // Increase for more snowflakes
+    const snowContainer = document.querySelector('.cooling-animation');
+
+    for (let i = 0; i < numberOfFlakes; i++) {
+        const flake = document.createElement('div');
+        flake.classList.add('flake');
+        const minSize = 5; // Min size of snowflake
+        const maxSize = 20; // Max size of snowflake
+        const size = Math.random() * (maxSize - minSize) + minSize;
+        flake.style.width = `${size}px`;
+        flake.style.height = `${size}px`;
+        flake.style.left = `${Math.random() * 100}%`;
+        flake.style.animationDuration = `${Math.random() * 5 + 3}s`; // Randomize duration between 3 to 8 seconds
+        flake.style.animationDelay = `${Math.random() * 5}s`; // Randomize delay up to 5 seconds
+        flake.style.opacity = Math.random(); // Randomize opacity
+
+        // Customizing the fall path for more randomness
+        const fallDistance = "100%"; // You can adjust if you want them to fall shorter
+        flake.style.animationName = 'fall';
+        flake.style.animationTimingFunction = 'linear';
+
+        snowContainer.appendChild(flake);
+    }
+
+    // To show the effect as soon as it's generated
+    snowContainer.style.display = 'block';
+}
+function adjustBackgroundWarmth(temp) {
+  const minTemp = 16;
+  const maxTemp = 30;
+  if (temp > minTemp && temp <= maxTemp) {
+    // Calculate warmth as a percentage between minTemp and maxTemp
+    let warmth = (temp - minTemp) / (maxTemp - minTemp);
+    // Interpolate between #0d9f82 (cool) and #ff4500 (warm) based on the calculated warmth
+    document.body.style.background = `linear-gradient(145deg, rgba(13, 159, 130, ${(1 - warmth).toFixed(2)}), rgba(255, 69, 0, ${warmth.toFixed(2)})) no-repeat center center fixed`;
+  } else if (temp > maxTemp) {
+    // If the temperature is above the maxTemp, set to warm background
+    document.body.style.background = 'linear-gradient(145deg, #ff4500, #ff4500) no-repeat center center fixed';
+  }
+  document.body.style.backgroundSize = 'cover';
+}
+// Call the function when you want to start the snow effect, e.g., on AC 'on'
+document.getElementById('acState').addEventListener('change', function() {
+    var coolingAnimation = document.querySelector('.cooling-animation');
+    if (this.value === 'on') {
+        coolingAnimation.innerHTML = ''; // Clear previous flakes
+        generateSnowflakes(); // Generate new set of flakes
+    } else {
+        coolingAnimation.style.display = 'none';
+    }
+});
+
+  function updateDevice(device, value) {
+    const data = {
+      teamid: "f3HYHGl",
+      device: device,
+      value: value
+    };
+    fetch('https://kodessphere-api.vercel.app/devices', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(data => {
+
+        if (!data.success) {
+          alert(data.message); // Using alert as a simple dialog box
+        }
+      })
+      .catch(error => {
+        alert('An error occurred. Please try again.');
       });
-      
-      function toggleBulb() {
-        const bulbIcon = document.getElementById('bulbIcon').querySelector('.bulb');
-        const bulbState = document.getElementById('bulbState').value;
-        bulbIcon.classList.toggle('glow', bulbState === 'on');
-        bulbIcon.classList.toggle('bulb-off', bulbState !== 'on');
-        updateDevice('bulb', bulbState === 'on' ? 1 : 0);
+  }
+
+  function adjustFanSpeed() {
+    var fanSpeed = document.getElementById('fanSpeed').value;
+    var fanSvg = document.getElementById('fanSvg');
+
+    // Remove any previous animation
+    fanSvg.style.animation = 'none';
+
+    setTimeout(function () {
+      if (fanSpeed > 0) {
+        var speedFactor = Math.pow(2, 5 - fanSpeed); // Example of a non-linear adjustment
+        fanSvg.style.animation = `spin ${speedFactor}s infinite linear`;
       }
-      
-      function updateDevice(device, value) {
-        const data = {
-          teamid: "f3HYHGl",
-          device: device,
-          value: value
-        };
-        fetch('https://kodessphere-api.vercel.app/devices', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(data => console.log('Success:', data))
-        .catch(error => console.error('Error:', error));
-      }
-      document.querySelector('input[type="range"]').addEventListener('input', function() {
-        updateDevice('fan', parseInt(this.value));
+    }, 10);
+  }
+  // Updated toggleBulb function
+  function toggleBulb() {
+    const bulbIcon = document.getElementById('bulbIcon').querySelector('.bulb');
+    const bulbState = document.getElementById('bulbState').value;
+    bulbIcon.classList.toggle('glow', bulbState === 'on');
+    bulbIcon.classList.toggle('bulb-off', bulbState !== 'on');
+    // Within toggleBulb function
+    if (bulbState === 'on') {
+      document.body.classList.add('glow-effect');
+    } else {
+      document.body.classList.remove('glow-effect');
+    }
+
+    // Update the bulb state in the server
+    updateDevice('bulb', bulbState === 'on' ? 1 : 0);
+
+    // Change the background to simulate room light up
+    if (bulbState === 'on') {
+      document.body.style.background = 'linear-gradient(145deg, #fffae6, #fffae6)';
+    } else {
+      document.body.style.background = 'black';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Fetch initial data from the API and update the UI accordingly
+    fetch('https://kodessphere-api.vercel.app/devices/f3HYHGl')
+      .then(response => response.json())
+      .then(data => {
+        document.querySelector('input[type="range"]').value = data.fan;
+        document.getElementById('bulbState').value = data.bulb ? 'on' : 'off';
+        document.querySelector('input[type="color"]').value = data.led;
+        document.querySelectorAll('.card')[3].querySelector('select').value = data.ac.state ? 'on' : 'off';
+        document.querySelectorAll('.card')[3].querySelector('input[type="number"]').value = data.ac.temp;
+
+        // Apply initial state to the bulb icon
+        toggleBulb();
+      })
+      .catch(error => {
+        console.error('Error fetching initial data:', error);
       });
-      
-      document.getElementById('bulbState').addEventListener('change', toggleBulb);
-      
-      document.querySelector('input[type="color"]').addEventListener('input', function() {
-        updateDevice('led', this.value);
-      });
-      
-      const acTempInput = document.querySelectorAll('.card')[3].querySelector('input[type="number"]');
-      const acStateSelect = document.querySelectorAll('.card')[3].querySelector('select');
-      
-      function updateAC() {
-        const acData = {
-          temp: parseInt(acTempInput.value),
-          state: acStateSelect.value === 'on' ? 1 : 0
-        };
-        updateDevice('ac', acData);
-      }
-      
-      acStateSelect.addEventListener('change', updateAC);
-      acTempInput.addEventListener('input', updateAC);
-    </script>
+  });
+
+  function toggleBulb() {
+    const bulbIcon = document.getElementById('bulbIcon').querySelector('.bulb');
+    const bulbState = document.getElementById('bulbState').value;
+    bulbIcon.classList.toggle('glow', bulbState === 'on');
+    bulbIcon.classList.toggle('bulb-off', bulbState !== 'on');
+
+    // Update the bulb state in the server
+    updateDevice('bulb', bulbState === 'on' ? 1 : 0);
+  }
+
+  function updateDevice(device, value) {
+    const data = {
+      teamid: "f3HYHGl",
+      device: device,
+      value: value
+    };
+    fetch('https://kodessphere-api.vercel.app/devices', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(data => console.log('Success:', data))
+      .catch(error => console.error('Error:', error));
+  }
+  document.querySelector('input[type="range"]').addEventListener('input', function () {
+    updateDevice('fan', parseInt(this.value));
+  });
+
+  document.getElementById('bulbState').addEventListener('change', toggleBulb);
+
+  document.querySelector('input[type="color"]').addEventListener('input', function () {
+    updateDevice('led', this.value);
+  });
+
+  // Event listeners for the AC temperature and state
+  const acTempInput = document.querySelectorAll('.card')[3].querySelector('input[type="number"]');
+  const acStateSelect = document.querySelectorAll('.card')[3].querySelector('select');
+
+  function updateAC() {
+  const acTempInput = document.querySelector('.card:nth-child(4) input[type="number"]');
+  const acStateSelect = document.querySelector('.card:nth-child(4) select');
+  const acData = {
+    temp: parseInt(acTempInput.value),
+    state: acStateSelect.value === 'on' ? 1 : 0
+  };
+  updateDevice('ac', acData);
+
+  adjustSnowflakes(acData.temp);
+  adjustBackgroundWarmth(acData.temp);
+}
+
+  acStateSelect.addEventListener('change', updateAC);
+  acTempInput.addEventListener('input', updateAC);
+
+</script>
+
+
 </html>
